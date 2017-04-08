@@ -7,10 +7,6 @@
       become: true
       hostname: name={{ sidecar_hostname }}
 
-    - name: ensure aptitude is installed
-      become: true
-      apt: pkg=aptitude state=present
-
     - name: install sources.list
       become: true
       copy: src=files/xenial-sources.list dest=/etc/apt/sources.list
@@ -30,7 +26,7 @@
       become: true
       apt: update_cache=true cache_valid_time=60 upgrade=safe
 
-    - name: install main system packages (1/2)
+    - name: install main system packages
       apt: pkg={{ item }} state=present
       become: true
       with_items:
@@ -84,6 +80,7 @@
         - nodejs
         - npm
         - ca-certificates
+        - aufs-tools
         - docker.io
         - kubelet
         - kubeadm
@@ -93,9 +90,9 @@
         - ruby-dev
         - ruby-bundler
 
-    - name: add ubuntu to docker group
+    - name: add {{ ansible_ssh_user }} to docker group, to build docker images for
       become: true
-      user: name=ubuntu append=true groups=docker
+      user: name={{ ansible_ssh_user }} append=true groups=docker
 
     - name: reset kubeadm
       become: true
@@ -105,8 +102,9 @@
       become: true
       shell: kubeadm init
 
-    - name: allow scheduling on master node hax
-      shell: kubectl taint nodes {{ sidecar_hostname }} dedicated-
+    - name: allow scheduling on master node # https://kubernetes.io/docs/getting-started-guides/kubeadm/#master-isolation
+      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
     
-    - name: install network
-      shell: kubectl apply -f https://git.io/weave-kube
+    # https://github.com/kubernetes/kubernetes/issues/43815#issuecomment-291573635
+    - name: install network # https://www.weave.works/docs/net/latest/kube-addon/#install
+      shell: kubectl apply -f https://git.io/weave-kube-1.6
