@@ -102,9 +102,17 @@
       become: true
       shell: kubeadm init
 
-    - name: allow scheduling on master node # https://kubernetes.io/docs/getting-started-guides/kubeadm/#master-isolation
-      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+    - name: install kubectl config
+      become: true
+      copy: remote_src=true src=/etc/kubernetes/admin.conf dest=/home/{{ ansible_ssh_user }}/ owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
     
     # https://github.com/kubernetes/kubernetes/issues/43815#issuecomment-291573635
-    - name: install network # https://www.weave.works/docs/net/latest/kube-addon/#install
+    # https://www.weave.works/docs/net/latest/kube-addon/#install
+    - name: install network
+      become: true
       shell: kubectl apply -f https://git.io/weave-kube-1.6
+
+    # https://kubernetes.io/docs/getting-started-guides/kubeadm/#master-isolation
+    - name: allow scheduling on master node
+      become: true
+      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
