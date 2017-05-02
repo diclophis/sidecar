@@ -1,11 +1,13 @@
 #!/bin/sh
 
+#TODO: add dialog and make safety net for formatting disks
+
 set -e
 set -x
 
 # working fat32 ufi hybrid!
 
-        BOOTDISK_DEV=/dev/sdb
+        BOOTDISK_DEV=${1}
 
         cd /var/tmp
 
@@ -47,3 +49,5 @@ set -x
 
         cp ~/sidecar/grub.cfg new-iso/boot/grub/grub.cfg
         sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT ${BOOTDISK_DEV}
+
+        sudo umount ${BOOTDISK_DEV}1
