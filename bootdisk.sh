@@ -50,4 +50,6 @@ set -x
         cp ~/sidecar/grub.cfg new-iso/boot/grub/grub.cfg
         sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT ${BOOTDISK_DEV}
 
+        #TODO: figure out bootstrap rootfs better
+
         sudo umount ${BOOTDISK_DEV}1
