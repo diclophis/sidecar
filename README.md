@@ -409,3 +409,221 @@ https://wiki.ubuntu.com/netinst
   357  dumpet -i ../custom.iso 
   358  dumpet -i ../ubuntu-16.04.2-server-amd64.iso 
   359  history >> ~/sidecar/README.md 
+    1  ls
+    2  ps aufx
+    3  htop
+    4  sudo apt-get install htop
+    5  ifconfuig
+    6  ifconfig
+    7  sudo /etc/init.d/networking restart
+    8  sudo vi /etc/network/interfaces
+    9  sudo vi /etc/network/interfaces.d/wlan0
+   10  sudo /etc/init.d/networking restart
+   11  systemctl status networking.servie
+   12  systemctl status networking.service
+   13  sudo vi /etc/network/interfaces.d/wlan0
+   14  systemctl status networking.service
+   15  sudo /etc/init.d/networking restart
+   16  systemctl status networking.service
+   17  ifquery --read-environment --list
+   18  sudo vi /etc/network/interfaces.d/wlan0
+   19  systemctl status networking.service
+   20  sudo /etc/init.d/networking restart
+   21  systemctl status networking.service
+   22  ifquery --read-environment --list
+   23  sudo vi /etc/network/interfaces.d/wlan0
+   24  sudo /etc/init.d/networking restart
+   25  systemctl status networking.service
+   26  systemctl restart networking.service
+   27  systemctl restart networking
+   28  restart networking.service
+   29  systemctl restart networking
+   30  systemctl status networking.service
+   31  sudo lsmod | grep iwl
+   32  sudo modprobe iwlmvm
+   33  systemctl restart networking
+   34  sudo /etc/init.d/networking restart
+   35  systemctl status networking.service
+   36  dmesg 
+   37  ifquery --read-environment --list
+   38  sudo mv /etc/network/interfaces.d/wlan0 /etc/network/interfaces.d/w1p1s0
+   39  sudo /etc/init.d/networking restart
+   40  journalctl -xe
+   41  dmesg | grep wifi
+   42  dmesg | grep -i wifi
+   43  dmesg | grep -i intel
+   44  dmesg | grep -i amt
+   45  dmesg | grep -i vpro
+   46  dmesg | grep -i duo
+   47  dmesg | grep -i core
+   48  dmesg | grep -i wlan
+   49  sudo vi /etc/network/interfaces.d/w1p1s0 
+   50  sudo /etc/init.d/networking restart
+   51  sudo apt-get install htop
+   52  htop
+   53  ls
+   54  sudo vi /etc/network/interfaces.d/w1p1s0 
+   55  apt search network manager
+   56  apt search network manager | grep NetworkMana
+   57  apt search network manager less
+   58  apt search network manager | less
+   59  sudo apt-get install network-manager
+   60  sudo vi /etc/network/interfaces.d/w1p1s0 
+   61  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+   62  sudo /etc/init.d/networking restart
+   63  ifconfig
+   64  sudo /etc/init.d/networking stop
+   65  sudo /etc/init.d/networking start
+   66  ifconfig
+   67  sudo vi /etc/network/interfaces.d/w1p1s0 
+   68  sudo /etc/init.d/networking restart
+   69  systemctl status networking.service
+   70  sudo vi /etc/network/interfaces.d/w1p1s0 
+   71  sudo /etc/init.d/networking restart
+   72  ifconfig
+   73  dmesg 
+   74  systemctl status networking.service
+   75  ifup w1l2s0b1
+   76  sudo vi /etc/network/interfaces.d/w1p1s0 
+   77  ifup wlp2s0b1
+   78  sudo ifup wlp2s0b1
+   79  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+   80  sudo vi /etc/network/interfaces.d/w1p1s0 
+   81  sudo /etc/init.d/networking restart
+   82  ifconfig
+   83  systemctl status networking.service
+   84  ls -ltr /var/log/
+   85  cat /var/log/syslog 
+   86  sudo vi /etc/network/interfaces.d/w1p1s0 
+   87  sudo /etc/init.d/networking restart
+   88  systemctl status networking.service
+   89  sudo vi /etc/network/interfaces.d/w1p1s0 
+   90  sudo /etc/init.d/networking restart
+   91  ifconfig
+   92  ping google.com
+   93  ping 8.8.8.8
+   94  ifconfig
+   95  dm
+   96  dmesg 
+   97  systemctl status networking.service
+   98  ifconfig
+   99  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  100  sudo /etc/init.d/networking restart
+  101  ifconfig
+  102  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  103  sudo vi /etc/network/interfaces.d/w1p1s0 
+  104  sudo /etc/init.d/networking restart
+  105  ifconfig
+  106  sudo ifdown wlp2s0b1
+  107  ifconfig
+  108  ip addr
+  109  ifconfig
+  110  sudo vi /etc/network/interfaces.d/w1p1s0 
+  111  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  112  sudo /etc/init.d/networking restart
+  113  ifconfig
+  114  sudo /etc/init.d/networking stop
+  115  ifconfig
+  116  sudo reboot
+  117  ifconfig
+  118  sudo /etc/init.d/networking restart
+  119  ifconfig
+  120  systemctl status networking.service
+  121  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  122  sudo /etc/init.d/networking restart
+  123  ifconfig
+  124  sudo vi /etc/network/interfaces.d/w1p1s0 
+  125  sudo /etc/init.d/networking restart
+  126  ifconfig
+  127  sudo vi /etc/network/interfaces.d/w1p1s0 
+  128  cat /etc/wpa_supplicant/wpa_supplicant.conf 
+  129  sudo vi /etc/network/interfaces.d/w1p1s0 
+  130  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  131  sudo /etc/init.d/networking restart
+  132  ifconfig
+  133  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  134  sudo /etc/init.d/networking restart
+  135  ifconfig
+  136  cat /var/log/syslog 
+  137  ifconfig
+  138  sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+  139  sudo vi /etc/network/interfaces.d/w1p1s0 
+  140  dmesg | grep wlp
+  141  sudo vi /etc/network/interfaces.d/w1p1s0 
+  142  sudo /etc/init.d/networking restart
+  143  ifconfig
+  144  ifup wlp2s0b1
+  145  sudo ifup wlp2s0b1
+  146  ifconfig
+  147  sudo reboot
+  148  cd sidecar/
+  149  git status
+  150  vi wlan0 
+  151  vi wpa_supplicant.conf 
+  152  git status
+  153  git add .
+  154  git status
+  155  git commit -m "add wifi config"
+  156  git config --global user.email "diclophis@gmail.com"
+  157  git config --global user.name "Jon Bardin"
+  158  git commit --amend --reset-author
+  159  git push -u origin master
+  160  git pull
+  161  vi README.md 
+  162  git status
+  163  git add README.md 
+  164  git commit
+  165  git push -u origin master
+  166  vi README.md 
+  167  cd /var/tmp/
+  168  ls
+  169  grub-mkrescue -o custom.iso newiso-2.0
+  170  ls -lh *iso
+  171  sudo dd if=custom.iso of=/dev/sdc bs=10M
+  172  dumpet -i custom.iso 
+  173  grub-mkrescue -h
+  174  grub-mkrescue --help
+  175  cd newiso-2.0/
+  176  grep xor ~/sidecar/README.md 
+  177  sudo apt install gdisk
+  178  sudo sgdisk --zap-all /dev/sdc
+  179  echo $?
+  180  sudo sgdisk --new=1:0:0 --typecode=1:ef00 /dev/sdc
+  181  apt search mkfs.vfat
+  182  apt search mkfs.fast
+  183  apt search mkfs.fat
+  184  sudo apt install dosfstools
+  185  sudo mkfs.vfat -F32 -n GRUB2EFI /dev/sdc1
+  186  cd ..
+  187  mkdir new-iso
+  188  sudo mount /dev/sdc1 new-iso
+  189  sudo umount new-iso
+  190  sudo mount -t vfat /dev/sdc1 new-iso -o uid=1000,gid=1000,umask=022
+  191  ls -l /mnt/
+  192  sudo mount -o loop ubuntu-16.04.2-server-amd64.iso /var/tmp/server-iso
+  193  mkdir mini-iso
+  194  sudo mount -o loop mini.iso /var/tmp/mini-iso
+  195  cp -R server-iso/* new-iso/
+  196  sudo cp -R server-iso/* new-iso/
+  197  rm -Rf new-iso
+  198  rm -Rf new-iso/*
+  199  ls -l new-iso/
+  200  df -h
+  201  rm -Rf new-iso/{pool,preseed}
+  202  rm -Rf new-iso/README.diskdefines 
+  203  ls -l new-iso/
+  204  sudo cp -R server-iso/boot new-iso/
+  205  sudo cp -R server-iso/EFI new-iso/
+  206  sudo cp -R mini-iso/* new-iso/
+  207  sudo cp -R ~/initrd-2.0.gz new-iso/
+  208  sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT /dev/sdc
+  209  echo $?
+  210  sudo umount new-iso
+  211  sudo mount -t vfat /dev/sdc1 new-iso -o uid=1000,gid=1000,umask=022
+  212  vi new-iso/boot/grub/grub.cfg 
+  213  cp ~/sidecar/grub.cfg new-iso/boot/grub/grub.cfg 
+  214  vi new-iso/boot/grub/grub.cfg 
+  215  sudo umount new-iso
+  216  rm -Rf extras/usr
+  217  rm -Rf extras/lib
+  218  history >> ~/sidecar/README.md 
