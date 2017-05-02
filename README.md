@@ -49,6 +49,7 @@ https://wiki.ubuntu.com/netinst
 # grub config
 
         cat /mnt/boot/grub/grub.cfg
+
     1  ls
     2  ps aufx
     3  htop
