@@ -25,35 +25,35 @@ set -x
         sudo umount /var/tmp/server-iso || true
         mkdir -p server-iso && sudo mount -o loop /var/tmp/ubuntu-16.04.2-server-amd64.iso server-iso
 
-        sudo cp -R server-iso/boot new-iso/
-        sudo cp -R server-iso/EFI new-iso/
+        sudo cp -R server-iso/boot /var/tmp/new-iso/
+        sudo cp -R server-iso/EFI /var/tmp/new-iso/
 
         sudo umount /var/tmp/mini-iso || true
         mkdir -p /var/tmp/mini-iso && sudo mount -o loop /var/tmp/mini.iso /var/tmp/mini-iso
-        sudo cp -R mini-iso/* new-iso/
+        sudo cp -R mini-iso/* /var/tmp/new-iso/
 
-        mkdir -p extras
-
-        cp ~/sidecar/workstation-install.cfg extras
-        dpkg -x /var/tmp/linux-image-extra-4.8.0-36-generic_4.8.0-36.36~16.04.1_amd64.deb extras
-
-        cd extras
+        mkdir -p /var/tmp/extras
+        dpkg -x /var/tmp/linux-image-extra-4.8.0-36-generic_4.8.0-36.36~16.04.1_amd64.deb /var/tmp/extras
+        cd /var/tmp/extras
         find . | cpio --quiet --dereference -o -H newc | gzip -9 > ~/extras.gz
 
+        mkdir -p /var/tmp/kickseeds
+        cp ~/sidecar/workstation-install.cfg /var/tmp/kickseeds/
+        cd /var/tmp/kickseeds
+        find . | cpio --quiet --dereference -o -H newc | gzip -9 > ~/kickseeds.gz
+
         cd ~/sidecar/rootfs-overlay
-        shar . > /var/tmp/new-iso/rootfs-overlay.sh
+        shar . > /var/tmp/new-iso/EFI/rootfs-overlay.sh
 
 # install extra initrds
 
         cd /var/tmp
-        cat /var/tmp/mini-iso/initrd.gz ~/extras.gz > /var/tmp/new-iso/initrd-2.0.gz
+        cat /var/tmp/mini-iso/initrd.gz ~/extras.gz ~/kickseeds.gz > /var/tmp/new-iso/initrd-2.0.gz
 
 # install boot loader
 
-        cp ~/sidecar/grub.cfg new-iso/boot/grub/grub.cfg
-        sudo parted ${BOOTDISK_DEV} set 1 bios_grub on
-        sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT ${BOOTDISK_DEV}
-
         #TODO: figure out bootstrap rootfs better
-
+        cp ~/sidecar/grub.cfg /var/tmp/new-iso/boot/grub/grub.cfg
+        sudo parted ${BOOTDISK_DEV} set 1 bios_grub on
+        sudo grub-install --removable --boot-directory=/var/tmp/new-iso/boot --efi-directory=/var/tmp/new-iso/EFI/BOOT ${BOOTDISK_DEV} || true
         sudo umount ${BOOTDISK_DEV}1
