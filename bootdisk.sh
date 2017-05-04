@@ -43,7 +43,7 @@ set -x
         find . | cpio --quiet --dereference -o -H newc | gzip -9 > ~/kickseeds.gz
 
         cd ~/sidecar/rootfs-overlay
-        shar . > /var/tmp/new-iso/EFI/rootfs-overlay.sh
+        shar . > /var/tmp/new-iso/rootfs-overlay.sh
 
 # install extra initrds
 
