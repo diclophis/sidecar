@@ -32,7 +32,7 @@ mkdir -p new-iso && sudo mount -t vfat ${BOOTDISK_DEV}1 new-iso -o uid=1000,gid=
 #sh ~/sidecar/wgets.sh
 
 mkdir -p extras
-dpkg -x linux-image-extra-4.8.0* extras
+dpkg -x linux-image-extra-4.13.0* extras
 cd extras
 find . | cpio --quiet --dereference -o -H newc | gzip -9 > ../extras.gz
 cd ..
