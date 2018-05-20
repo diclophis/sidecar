@@ -52,6 +52,7 @@ sudo cp -R mini-iso/* new-iso/
 
 cd ../rootfs-overlay
 shar . > ../tmp/new-iso/rootfs-overlay.sh
+shar . > ../tmp/rootfs-overlay.sh
 
 # install extra initrds
 cd ../tmp
