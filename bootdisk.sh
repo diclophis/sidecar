@@ -31,10 +31,11 @@ mkdir -p new-iso && sudo mount -t vfat ${BOOTDISK_DEV}1 new-iso -o uid=1000,gid=
         
 #sh ~/sidecar/wgets.sh
 
-#mkdir -p /var/tmp/extras
-#dpkg -x /var/tmp/linux-image-extra-4.8.0-36-generic_4.8.0-36.36~16.04.1_amd64.deb /var/tmp/extras
-#cd /var/tmp/extras
-#find . | cpio --quiet --dereference -o -H newc | gzip -9 > ~/extras.gz
+mkdir -p extras
+dpkg -x linux-image-extra-4.8.0* extras
+cd extras
+find . | cpio --quiet --dereference -o -H newc | gzip -9 > ../extras.gz
+cd ..
 
 mkdir -p kickseeds
 cp ../workstation-install.cfg kickseeds
@@ -56,7 +57,7 @@ shar . > ../tmp/new-iso/rootfs-overlay.sh
 cd ../tmp
 
 #cat mini-iso/initrd.gz extras.gz ~/kickseeds.gz > /var/tmp/new-iso/initrd-2.0.gz
-cat mini-iso/initrd.gz kickseeds.gz new-iso/initrd-2.0.gz
+cat mini-iso/initrd.gz extras.gz kickseeds.gz > new-iso/initrd-2.0.gz
 
 # install boot loader
 
