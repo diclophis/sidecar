@@ -20,7 +20,7 @@
 
     - name: install kubeadm apt sources
       become: true
-      apt_repository: repo="deb http://apt.kubernetes.io/ kubernetes-xenial main" state=present
+      apt_repository: repo="deb http://packages.cloud.google.com/apt kubernetes-xenial main" state=present
 
     - name: update and safe upgrade apt-get packages
       become: true
@@ -98,21 +98,21 @@
       become: true
       shell: kubeadm reset
 
-    - name: init kubeadm
-      become: true
-      shell: kubeadm init
-
-    - name: install kubectl config
-      become: true
-      copy: remote_src=true src=/etc/kubernetes/admin.conf dest=/home/{{ ansible_ssh_user }}/ owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
-    
-    # https://github.com/kubernetes/kubernetes/issues/43815#issuecomment-291573635
-    # https://www.weave.works/docs/net/latest/kube-addon/#install
-    - name: install network
-      become: true
-      shell: kubectl apply -f https://git.io/weave-kube-1.6
-
-    # https://kubernetes.io/docs/getting-started-guides/kubeadm/#master-isolation
-    - name: allow scheduling on master node
-      become: true
-      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+#    - name: init kubeadm
+#      become: true
+#      shell: kubeadm init
+#
+#    - name: install kubectl config
+#      become: true
+#      copy: remote_src=true src=/etc/kubernetes/admin.conf dest=/home/{{ ansible_ssh_user }}/ owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+#    
+#    # https://github.com/kubernetes/kubernetes/issues/43815#issuecomment-291573635
+#    # https://www.weave.works/docs/net/latest/kube-addon/#install
+#    - name: install network
+#      become: true
+#      shell: kubectl apply -f https://git.io/weave-kube-1.6
+#
+#    # https://kubernetes.io/docs/getting-started-guides/kubeadm/#master-isolation
+#    - name: allow scheduling on master node
+#      become: true
+#      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
