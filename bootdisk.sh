@@ -51,8 +51,8 @@ mkdir -p mini-iso && sudo mount -o loop mini.iso mini-iso
 sudo cp -R mini-iso/* new-iso/
 
 cd ../rootfs-overlay
-shar . > ../tmp/new-iso/rootfs-overlay.sh
-shar . > ../tmp/rootfs-overlay.sh
+shar -V . > ../tmp/new-iso/rootfs-overlay.sh
+cp ../tmp/new-iso/rootfs-overlay.sh ../tmp/rootfs-overlay.sh
 
 # install extra initrds
 cd ../tmp
