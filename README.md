@@ -67,3 +67,8 @@ https://wiki.ubuntu.com/netinst
 
         cp ~/workspace/sidecar/grub.cfg new-iso/boot/grub/grub.cfg
         sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT /dev/sdc
+
+# details / passwords
+
+        git update-index --skip-worktree rootfs-overlay/etc/wpa_supplicant/wpa_supplicant.conf
+        git update-index --skip-worktree rootfs-overlay/home/kangaroo/.ssh/authorized_keys
