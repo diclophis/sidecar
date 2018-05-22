@@ -5,4 +5,4 @@ set -e
 
 # . ~/.sidecar-env.sh
 
-ansible-playbook -v --ask-sudo-pass -i ansible/inventory/sidecar ansible/install-playbook.yml
+ANSIBLE_PIPELINING=true DEFAULT_INTERNAL_POLL_INTERVAL=0.5 DEFAULT_FORKS=1 ansible-playbook -v -i ansible/inventory/sidecar ansible/install-playbook.yml
