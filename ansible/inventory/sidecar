@@ -2,3 +2,5 @@
 192.168.1.5 ansible_ssh_user=kangaroo
 192.168.1.6 ansible_ssh_user=kangaroo
 192.168.1.7 ansible_ssh_user=kangaroo
+192.168.1.8 ansible_ssh_user=kangaroo
+192.168.1.9 ansible_ssh_user=kangaroo
