@@ -50,8 +50,9 @@ sudo cp -R server-iso/EFI new-iso/
 mkdir -p mini-iso && sudo mount -o loop mini.iso mini-iso
 sudo cp -R mini-iso/* new-iso/
 
+#NOTE: uudecode required if using binary files... (untar base64 files on the in post)
 cd ../rootfs-overlay
-shar -V . > ../tmp/new-iso/rootfs-overlay.sh
+shar -T -V . > ../tmp/new-iso/rootfs-overlay.sh
 cp ../tmp/new-iso/rootfs-overlay.sh ../tmp/rootfs-overlay.sh
 
 # install extra initrds
@@ -64,6 +65,8 @@ cat mini-iso/initrd.gz extras.gz kickseeds.gz > new-iso/initrd-2.0.gz
 
 #TODO: figure out bootstrap rootfs better
 cp ../grub.cfg new-iso/boot/grub/grub.cfg
+
+sync -f new-iso/boot/grub/grub.cfg
 
 #sudo parted ${BOOTDISK_DEV} set 1 bios_grub on
 #sudo grub-install --removable --boot-directory=/var/tmp/new-iso/boot --efi-directory=/var/tmp/new-iso/EFI/BOOT ${BOOTDISK_DEV} || true
