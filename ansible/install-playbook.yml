@@ -9,6 +9,10 @@
         - name: set hostname
           hostname: name={{ sidecar_hostname }}
 
+        #- name: set etc/host for hostname
+        #  become: true
+        #  lineinfile: dest=/etc/hosts line="127.0.0.1 {{ app_alt_env }}.{{ alt_domain }}"
+
         - name: install sources.list
           copy: src=files/xenial-sources.list dest=/etc/apt/sources.list
 
@@ -38,6 +42,9 @@
 
         - name: update and safe upgrade apt-get packages
           apt: update_cache=true cache_valid_time=60 upgrade=safe
+
+        #- become: true
+        #  shell: apt-get remove -y docker-ce docker.io runc
 
         - name: install main system packages
           apt: pkg={{ item }} state=present
@@ -93,7 +100,6 @@
             - npm
             - ca-certificates
             - aufs-tools
-            - docker.io
             - kubelet
             - kubeadm
             - kubectl
@@ -103,7 +109,7 @@
             - ruby-bundler
             - openvpn
             - conntrack
-            - docker-ce
+            - docker-ce=17.03.2~ce-0~ubuntu-xenial
 
         - name: add {{ ansible_ssh_user }} to docker group, to build docker images for
           user: name={{ ansible_ssh_user }} append=true groups=docker
