@@ -21,6 +21,21 @@
         - name: install kubeadm apt sources
           apt_repository: repo="deb http://packages.cloud.google.com/apt kubernetes-xenial main" state=present
 
+        - name: install current docker GPG key
+          become: true
+          apt_key: state=present url=https://download.docker.com/linux/ubuntu/gpg id=0EBFCD88
+
+        - name: ensure the docker apt repository is added
+          become: true
+          apt_repository: state=absent repo='deb https://download.docker.com/linux/ubuntu xenial stable'
+
+        - name: ensure the docker apt repository is added
+          become: true
+          apt_repository: state=present repo='deb http://download.docker.com/linux/ubuntu xenial stable'
+
+        - name: ensure apt-cache
+          copy: content='Acquire::http::proxy::us.archive.ubuntu.com "http://192.168.1.4:8000/ubuntu";' dest=/etc/apt/apt.conf
+
         - name: update and safe upgrade apt-get packages
           apt: update_cache=true cache_valid_time=60 upgrade=safe
 
@@ -86,6 +101,9 @@
             - ruby
             - ruby-dev
             - ruby-bundler
+            - openvpn
+            - conntrack
+            - docker-ce
 
         - name: add {{ ansible_ssh_user }} to docker group, to build docker images for
           user: name={{ ansible_ssh_user }} append=true groups=docker
