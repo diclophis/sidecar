@@ -1,3 +1,4 @@
 *retry
 rootfs-overlay/etc/rc.local
 tmp
+ansible/files/*ovpn

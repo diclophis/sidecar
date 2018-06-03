@@ -72,3 +72,7 @@ https://wiki.ubuntu.com/netinst
 
         git update-index --skip-worktree rootfs-overlay/etc/wpa_supplicant/wpa_supplicant.conf
         git update-index --skip-worktree rootfs-overlay/home/kangaroo/.ssh/authorized_keys
+
+# transport docker image over ssh
+
+        ssh ubuntu@ops.bardin.haus docker save localhost/webdav:9c4762452af4fee02307b16e9be0defb01d55fc4 | bzip2 | pv | bunzip2 | docker load

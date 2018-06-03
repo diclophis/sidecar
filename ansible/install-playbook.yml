@@ -9,9 +9,11 @@
         - name: set hostname
           hostname: name={{ sidecar_hostname }}
 
-        #- name: set etc/host for hostname
-        #  become: true
-        #  lineinfile: dest=/etc/hosts line="127.0.0.1 {{ app_alt_env }}.{{ alt_domain }}"
+        - name: set etc/host for hostname
+          lineinfile: dest=/etc/hosts line="127.0.0.1 {{ sidecar_hostname }}"
+
+        - name: ensure apt-cache
+          copy: content='Acquire::http::proxy::us.archive.ubuntu.com "http://192.168.1.2:8000/ubuntu";' dest=/etc/apt/apt.conf
 
         - name: install sources.list
           copy: src=files/xenial-sources.list dest=/etc/apt/sources.list
@@ -26,25 +28,21 @@
           apt_repository: repo="deb http://packages.cloud.google.com/apt kubernetes-xenial main" state=present
 
         - name: install current docker GPG key
-          become: true
           apt_key: state=present url=https://download.docker.com/linux/ubuntu/gpg id=0EBFCD88
 
         - name: ensure the docker apt repository is added
-          become: true
           apt_repository: state=absent repo='deb https://download.docker.com/linux/ubuntu xenial stable'
 
         - name: ensure the docker apt repository is added
-          become: true
           apt_repository: state=present repo='deb http://download.docker.com/linux/ubuntu xenial stable'
-
-        - name: ensure apt-cache
-          copy: content='Acquire::http::proxy::us.archive.ubuntu.com "http://192.168.1.4:8000/ubuntu";' dest=/etc/apt/apt.conf
 
         - name: update and safe upgrade apt-get packages
           apt: update_cache=true cache_valid_time=60 upgrade=safe
 
-        #- become: true
-        #  shell: apt-get remove -y docker-ce docker.io runc
+        - name: reset kubeadm
+          shell: (which kubeadm && kubeadm reset) || true
+
+        - shell: apt-get remove -y docker-ce docker.io runc
 
         - name: install main system packages
           apt: pkg={{ item }} state=present
@@ -117,17 +115,8 @@
         - name: reset kubeadm
           shell: kubeadm reset
 
-    #    - name: init kubeadm
-    #      shell: kubeadm init
-    #
-    #    - name: install kubectl config
-    #      copy: remote_src=true src=/etc/kubernetes/admin.conf dest=/home/{{ ansible_ssh_user }}/ owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
-    #    
-    #    # https://github.com/kubernetes/kubernetes/issues/43815#issuecomment-291573635
-    #    # https://www.weave.works/docs/net/latest/kube-addon/#install
-    #    - name: install network
-    #      shell: kubectl apply -f https://git.io/weave-kube-1.6
-    #
-    #    # https://kubernetes.io/docs/getting-started-guides/kubeadm/#master-isolation
-    #    - name: allow scheduling on master node
-    #      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+        - name: copy openvpn config
+          copy: src={{ sidecar_hostname }}.ovpn dest=/etc/openvpn/client.conf
+
+        - name: restart openvpn client
+          service: name=openvpn@client state=restarted
