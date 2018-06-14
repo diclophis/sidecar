@@ -40,14 +40,15 @@ fi
 mkdir -p new-iso-copy
 
 # TODO: cache rebake via re-layering from other isos
-mkdir -p extras
-for I in linux-image-*
-do
-  dpkg -x $I extras
-done
-cd extras
-find . | cpio --quiet --dereference -o -H newc | gzip -9 > ../extras.gz
-cd ..
+#
+# mkdir -p extras
+# for I in linux-image-*
+# do
+#   dpkg -x $I extras
+# done
+# cd extras
+# find . | cpio --quiet --dereference -o -H newc | gzip -9 > ../extras.gz
+# cd ..
 
 mkdir -p kickseeds
 cp ../workstation-install.cfg kickseeds
