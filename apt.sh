@@ -3,4 +3,4 @@
 set -e
 set -x
 
-sudo apt install gdisk sharutils dosfstools
+sudo apt install gdisk sharutils dosfstools parted
