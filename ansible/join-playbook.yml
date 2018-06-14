@@ -1,0 +1,10 @@
+---
+- hosts: sidecar
+  vars_files:
+    - vars/sidecar.yml
+  tasks:
+    - name: all things for root
+      become: true
+      block:
+        - shell: swapoff -a
+        - shell: kubeadm join 10.0.0.253:6443 --token vpssbv.idtu6aypk9d89mu2 --discovery-token-ca-cert-hash sha256:131078c2baa74d1b09af34ca9e45c1c05b2cb0a791c410131dfa0f332dbc15cd
