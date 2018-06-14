@@ -7,34 +7,36 @@ set -x
 
 # working fat32 ufi hybrid!
 
-#BOOTDISK_DEV=${1}
+BOOTDISK_DEV=${1}
 
-#if [ -z "${BOOTDISK_DEV}" ];
-#then
-#  echo bad BOOTDISK_DEV arg
-#  exit 1
-#fi
+if [ -z "${BOOTDISK_DEV}" ];
+then
+  echo bad BOOTDISK_DEV arg
+  exit 1
+fi
 
+sh ~/sidecar/wgets.sh
+sh ~/sidecar/apt.sh
+
+mkdir -p tmp
 cd tmp
 
 sudo umount ubuntu-16.04.4-server-amd64.iso server-iso || true
 sudo umount mini.iso || true
 
-#sudo umount ${BOOTDISK_DEV}1 || true
-#sudo sgdisk --zap-all ${BOOTDISK_DEV}
-#sudo sgdisk --new=1:0:0 --typecode=1:ef00 ${BOOTDISK_DEV}
-#sudo umount ${BOOTDISK_DEV}1 || true
-#sudo mkfs.vfat -v -F32 -n GRUB2EFI ${BOOTDISK_DEV}1
+sudo umount ${BOOTDISK_DEV}1 || true
+sudo sgdisk --zap-all ${BOOTDISK_DEV}
+sudo sgdisk --new=1:0:0 --typecode=1:ef00 ${BOOTDISK_DEV}
+sudo umount ${BOOTDISK_DEV}1 || true
+sudo mkfs.vfat -v -F32 -n GRUB2EFI ${BOOTDISK_DEV}1
 
 sudo rm -Rf new-iso
 mkdir -p new-iso
 
-#sudo mount -t vfat ${BOOTDISK_DEV}1 new-iso -o uid=1000,gid=1000,umask=022
+sudo mount -t vfat ${BOOTDISK_DEV}1 new-iso -o uid=1000,gid=1000,umask=022
 
 # rebake via re-layering from other isos
         
-#sh ~/sidecar/wgets.sh
-
 #mkdir -p extras
 #dpkg -x linux-image-extra-4.13.0* extras
 #cd extras
@@ -80,6 +82,7 @@ sudo cp ../grub.cfg new-iso/boot/grub/grub.cfg
 sync -f new-iso/boot/grub/grub.cfg
 
 #sudo parted ${BOOTDISK_DEV} set 1 bios_grub on
-#sudo grub-install --removable --boot-directory=/var/tmp/new-iso/boot --efi-directory=/var/tmp/new-iso/EFI/BOOT ${BOOTDISK_DEV} || true
+sudo parted ${BOOTDISK_DEV} set 1 boot on
+sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT ${BOOTDISK_DEV} || true
 
-#sudo umount ${BOOTDISK_DEV}1
+sudo umount ${BOOTDISK_DEV}1
