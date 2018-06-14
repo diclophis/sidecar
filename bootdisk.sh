@@ -50,11 +50,11 @@ sudo mount -t vfat ${BOOTDISK_DEV}3 new-iso -o uid=1000,gid=1000,umask=022
 
 # rebake via re-layering from other isos
         
-#mkdir -p extras
-#dpkg -x linux-image-extra-4.13.0* extras
-#cd extras
-#find . | cpio --quiet --dereference -o -H newc | gzip -9 > ../extras.gz
-#cd ..
+mkdir -p extras
+dpkg -x linux-image-extra-4.13.0* extras
+cd extras
+find . | cpio --quiet --dereference -o -H newc | gzip -9 > ../extras.gz
+cd ..
 
 mkdir -p kickseeds
 cp ../workstation-install.cfg kickseeds
@@ -86,12 +86,13 @@ cd ..
 # install extra initrds
 cat mini-iso/initrd.gz extras.gz kickseeds.gz rootfs-overlay.gz > new-iso/initrd-2.0.gz
 
-# install boot loader
-
 sudo cp ../grub.cfg new-iso/boot/grub/grub.cfg
+
+rm -Rf new-iso-copy && cp -R new-iso new-iso-copy
 
 sync -f new-iso/boot/grub/grub.cfg
 
+# install boot loader
 #sudo parted ${BOOTDISK_DEV} set 1 bios_grub on
 #sudo parted ${BOOTDISK_DEV} set 1 boot on
 sudo grub-install --removable --boot-directory=new-iso/boot --efi-directory=new-iso/EFI/BOOT ${BOOTDISK_DEV} || true
